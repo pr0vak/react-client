@@ -21,14 +21,26 @@ type Product = {
 function App() {
 
 	const [products, setProducts] = useState<Product[]>([]);
+	const [error, setError] = useState<string | null>(null);
 
 	useEffect(() => {
 		fetch("http://localhost:9000/api/v1/products")
 			.then((response) => {
+				if (!response.ok) {
+					throw new Error(`Всё плохо: ${response.status}`);
+				}
+
 				return response.json() as Promise<Product[]>;
 			})
-			.then((data) => setProducts(data));
+			.then((data) => setProducts(data))
+			.catch((err) => {
+				setError(err.message);
+			});
 	});
+
+	if (error) {
+		return (<h1>Ошибка: {error}</h1>);
+	}
 
   return (
     <div>
