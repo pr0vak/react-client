@@ -22,9 +22,11 @@ function App() {
 
 	const [products, setProducts] = useState<Product[]>([]);
 	const [error, setError] = useState<string | null>(null);
+	const [loaded, setLoaded] = useState<boolean>(true);
 
 	useEffect(() => {
-		fetch("http://localhost:9000/api/v1/products")
+		new Promise((resolve) => setTimeout(resolve, 5000))
+			.then(() => fetch("http://localhost:9000/api/v1/products"))
 			.then((response) => {
 				if (!response.ok) {
 					throw new Error(`Всё плохо: ${response.status}`);
@@ -35,11 +37,19 @@ function App() {
 			.then((data) => setProducts(data))
 			.catch((err) => {
 				setError(err.message);
-			});
-	});
+			})
+			.finally(() => setLoaded(false));
+	}, []);
+
+	if (loaded) {
+		return (
+			<h1>Всё грузится...</h1>
+		);
+	}
 
 	if (error) {
-		return (<h1>Ошибка: {error}</h1>);
+		return (
+			<h1>Ошибка: {error}</h1>);
 	}
 
   return (
