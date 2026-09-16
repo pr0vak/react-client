@@ -1,14 +1,11 @@
-import { Button, Container } from 'react-bootstrap';
+import { PageContainer, Spinner } from './shared/ui';
 
 function App() {
   return (
-		<Container className='py-4'>
+		<PageContainer>
 			<h1>Product API Client</h1>
-
-			<Button variant='primary'>
-				Hello world
-			</Button>
-		</Container>
+			<Spinner />
+		</PageContainer>
 	);
 }
 
