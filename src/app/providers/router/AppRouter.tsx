@@ -1,3 +1,4 @@
+import { MainLayout } from "@/app/layouts"
 import { PageContainer } from "@/shared/ui"
 import { createBrowserRouter, Link, RouterProvider } from "react-router"
 
@@ -22,8 +23,14 @@ function AboutPage() {
 }
 
 const router = createBrowserRouter([
-  { path: "/", element: <HomePage /> },
-  { path: "/about", element: <AboutPage /> }
+  {
+    path: "/", 
+    element: <MainLayout />,
+    children: [
+      { index: true, element: <HomePage /> },
+      { path: "/about", element: <AboutPage /> }
+    ]
+  }
 ])
 
 export function AppRouter() {
