@@ -1,11 +1,8 @@
-import { PageContainer, Spinner } from './shared/ui';
+import { AppRouter } from "@/app/providers/router";
 
 function App() {
   return (
-		<PageContainer>
-			<h1>Product API Client</h1>
-			<Spinner />
-		</PageContainer>
+    <AppRouter />
 	);
 }
 
