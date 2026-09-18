@@ -1,8 +1,11 @@
 import { AppRouter } from "@/app/providers/router";
+import { QueryProvider } from "./app/providers/query";
 
 function App() {
   return (
-    <AppRouter />
+    <QueryProvider>
+      <AppRouter />
+    </QueryProvider>
 	);
 }
 
