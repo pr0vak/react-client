@@ -1,4 +1,4 @@
-import { Header } from "@/widgets/header/ui";
+import { Header } from "@/widgets/header";
 import { Outlet } from "react-router";
 
 export function MainLayout() {
