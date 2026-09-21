@@ -8,7 +8,7 @@ interface ProviderProps {
 }
 
 export function SessionProvider({ children }: ProviderProps) {
-  const [session, setSession] = useState<Session | null>(loadSession());
+  const [session, setSession] = useState<Session | null>(() => loadSession());
 
   const signIn = useCallback((next: Session) => {
     saveSession(next);
