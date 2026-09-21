@@ -1,4 +1,5 @@
-import { useCallback, useState, type ReactNode } from "react";
+import { setTokenGetter } from "@/shared/api";
+import { useCallback, useEffect, useState, type ReactNode } from "react";
 import { clearSession, loadSession, saveSession } from "../lib/storage";
 import type { Session } from "../types";
 import { SessionContext } from "./context";
@@ -18,6 +19,10 @@ export function SessionProvider({ children }: ProviderProps) {
   const signOut = useCallback(() => {
     clearSession();
     setSession(null);
+  }, []);
+
+  useEffect(() => {
+    setTokenGetter (() => loadSession()?.token ?? null);
   }, []);
 
   return (
