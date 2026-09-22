@@ -1,5 +1,6 @@
 import { setTokenGetter } from "@/shared/api";
 import { useCallback, useEffect, useState, type ReactNode } from "react";
+import { setUnauthorizedHandler } from "../../../shared/api/unauthorized";
 import { clearSession, loadSession, saveSession } from "../lib/storage";
 import type { Session } from "../types";
 import { SessionContext } from "./context";
@@ -23,6 +24,14 @@ export function SessionProvider({ children }: ProviderProps) {
 
   useEffect(() => {
     setTokenGetter (() => loadSession()?.token ?? null);
+    setUnauthorizedHandler(() => {
+      clearSession();
+      setSession(null);
+
+      if (window.location.pathname !== "/login") {
+        window.location.href = "/login";
+      }
+    });
   }, []);
 
   return (

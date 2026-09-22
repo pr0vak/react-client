@@ -1,5 +1,6 @@
 import axios from "axios";
 import { getAuthToken } from "../auth-token";
+import { handleUnauthorized } from "../unauthorized";
 
 const baseURL = import.meta.env.VITE_API_URL ?? "";
 
@@ -19,3 +20,13 @@ http.interceptors.request.use((cfg) => {
   return cfg;
 });
 
+http.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (axios.isAxiosError(error) && error.response?.status === 401) {
+      handleUnauthorized();
+    }
+
+    return Promise.reject(error);
+  }
+)
